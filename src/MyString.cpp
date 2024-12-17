@@ -81,6 +81,36 @@ MyString MyString::operator+(const MyString& other)
    return result;
 }
 
+bool MyString::operator==(const MyString& other) const
+{
+   return strcmp(m_begin, other.m_begin) == 0;
+}
+
+bool MyString::operator!=(const MyString& other) const
+{
+   return !(this == &other);
+}
+
+bool MyString::operator<(const MyString& other) const
+{
+   return strcmp(m_begin, other.m_begin) < 0;
+}
+
+bool MyString::operator<=(const MyString& other) const
+{
+   return this < &other || this == &other;
+}
+
+bool MyString::operator>(const MyString& other) const
+{
+   return strcmp(m_begin, other.m_begin) > 0;
+}
+
+bool MyString::operator>=(const MyString& other) const
+{
+   return this > &other || this == &other;
+}
+
 MyString operator+(const char* s, const MyString& other)
 {
    MyString result{ s };
@@ -111,4 +141,13 @@ void MyString::add(const char* s)
    memcpy(&temp[old_size], s, other_size + 1);
    delete[] m_begin;
    m_begin = temp;
+}
+
+bool MyString::is_greater_insensitive(const MyString& other) const
+{
+   auto a = m_begin, b = other.m_begin;
+   for (;; a++, b++) {
+      int d = tolower((unsigned char)*a) - tolower((unsigned char)*b);
+      if (d != 0 || !*a) return d > 0;
+   }
 }

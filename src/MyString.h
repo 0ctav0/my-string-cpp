@@ -18,9 +18,14 @@ public:
    MyString& operator=(const char* s);
    MyString& operator=(const MyString& other);
    MyString& operator=(MyString&& other) noexcept;
+
    MyString& operator+=(const char* s);
-   MyString& operator+=(const MyString other);
-   MyString& operator+(const MyString other);
+   MyString& operator+=(const MyString& other);
+
+   MyString operator+(const char* s);
+   MyString operator+(const MyString& other);
+   friend MyString operator+(const char* s, const MyString& other);
+
    friend std::ostream& operator<<(std::ostream& os, const MyString& itself);
 
 private:
@@ -29,5 +34,5 @@ private:
 
 
    void copy(const char* s);
-   void copy(const MyString& other);
+   void add(const char* s);
 };
